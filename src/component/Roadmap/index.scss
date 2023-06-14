@@ -1,0 +1,118 @@
+.roadmap-content{
+    padding: 50px 150px;
+    background-color: #F8F3FF;
+    h1{
+        color: #0A004A;
+        font-family: 'Poppins-Bold';
+        font-style: normal;
+        font-weight: 800;
+        font-size: 30px;
+        line-height: 45px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .roadmap-main-content{
+        display: flex;
+        gap: 25px;
+        .vertical-stepper{
+            display: flex;
+            flex-direction: column;
+            .stepper-col{
+                display: flex;
+                gap: 15px;
+                .stepper-shape-content{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    .circle-number{
+                        background-color: #8221FE;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        color: #fff;
+                        font-family: 'Poppins-Bold';
+                        font-style: normal;
+                        font-weight: 800;
+                        font-size: 25px;
+                        line-height: 38px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .stepper-line{
+                        width: 2px;
+                        height: 150px;
+                        background-color: #8221FE;
+                    }
+                }
+                .stepper-desc{
+                    display: flex;
+                    gap: 15px;
+                    flex-direction: column;
+                    margin-top: 10px;
+                    h2{
+                        font-family: 'Poppins-Bold';
+                        font-style: normal;
+                        font-weight: 800;
+                        font-size: 25px;
+                        line-height: 38px;
+                        color: #8221FE;
+                    }
+                    p{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 24px;
+                        color: #0A004A;
+                    }
+                }
+            }            
+        }
+    }
+    .hide{
+        display: block;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .roadmap-content{
+        padding: 50px 20px;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .roadmap-content{
+        .roadmap-main-content{
+            img{
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:992px) {
+    .roadmap-content{
+        .hide{
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width:576px) {
+    .roadmap-content{
+        padding: 50px 0!important;
+        .roadmap-main-content{
+            .vertical-stepper{
+                .stepper-col{
+                    .stepper-shape-content{
+                        .stepper-line{
+                            height: 200px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+.footer-content{
+    background-color: #0D1A8C;
+    padding: 50px 20px;
+    p{
+        text-align: center;
+        color: #fff;
+        margin: 0;
+        border-right: 2px solid #fff;
+        padding: 0 10px;
+    }
+    a {
+        color: #fff;
+        padding: 0 10px;
+        border-right: 2px solid #fff;
+        text-decoration: none;
+    }
+    a:last-child{
+        border-right: none;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .footer-content{
+        .footer-main{
+            flex-direction: column;
+            gap: 15px;
+            p{
+                border: none;
+            }
+            a{
+                border: none;
+            }
+        }
+    }
+}

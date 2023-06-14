@@ -1,0 +1,34 @@
+.terms {
+    padding: 120px;
+    color: #00303E;
+    width: 100%;
+    max-width: 1024px;
+    text-align: left;
+
+    h1 {
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    .sub-content{
+        margin-left: 20px;
+    }
+}
+
+@media (max-width: 750px) {
+    .terms {
+        padding: 60px !important;
+    }
+}
+
+@media (max-width: 525px) {
+    .terms {
+        padding: 25px !important;
+    }
+}
+
+@media (max-width: 390px) {
+    .terms {
+        padding: 10px !important;
+    }
+}

@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("./asset/Poppins/Poppins-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("./asset/Poppins/Poppins-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: Poppins !important;
+}
+
+.font-bold {
+  font-weight: bold !important;
+}
+.font-color {
+  color: #1b1464 !important;
+}
+
+.main-pad {
+  background-color: #0d1a8c;
+  padding: 40px 0px 40px 0px;
+  position: relative;
+  height: 400px;
+}
+.buy-button {
+  min-width: 110px;
+  background-color: #48c100 !important;
+  border: none !important;
+  font-weight: bold !important;
+  border-radius: 20px !important;
+  padding: 6px 20px 6px 20px !important;
+}
+.btn-content {
+  width: 30%;
+}
+
+@media screen and (max-width: 1299px) {
+  .btn-content {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .btn-content {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 1091px) {
+  .btn-content {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 1091px) {
+  .btn-content {
+    width: auto !important;
+  }
+}

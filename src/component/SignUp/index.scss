@@ -1,0 +1,47 @@
+.signup-content{
+    background: #0D1A8C;
+    .signup-main-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .signup-desc-content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 0;
+            text-align: center;
+            gap: 30px;
+            h2{
+                font-family: 'Poppins-Bold';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 30px;
+                line-height: 45px;
+                color: #fff;
+            }
+            p{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: start;
+                color: #fff;
+            }
+            .buy-button{
+                width: fit-content;
+                padding: 10px 30px!important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .signup-content{
+        .signup-main-content{
+            .signup-hide{
+                display: none;
+            }
+        }
+    }
+}

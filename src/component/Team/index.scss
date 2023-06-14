@@ -1,0 +1,183 @@
+.team-content{
+    padding: 50px 150px;
+    h2{
+        font-family: 'Poppins-Bold';
+        font-style: normal;
+        font-weight: 800;
+        font-size: 30px;
+        line-height: 45px;
+        text-align: center;
+        color: #0A004A;
+        margin-bottom: 40px;
+    }
+    .team-main-content{
+        gap: 25px;
+        align-items: center;
+        justify-content: center;
+        .team-col{
+            width: 20%;
+            align-items: center;
+            justify-content: start;
+            height: 290px;
+            h4{
+                font-family: 'Poppins-Bold';
+                font-style: normal;
+                font-weight: 800;
+                font-size: 18px;
+                line-height: 27px;
+                text-align: center;
+                color: #0A004A;
+            }
+            p{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: center;
+                color: #0A004A;
+            }
+            .icon-linkedin{
+                color: #7f2fde;
+                font-size: 29px;
+            }
+        }
+    }
+    .team-main-slider{
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        .slick-slider{
+            width: 25%;
+        }
+        .ft-slick__dots--custom {
+            height: 16px;
+            width: 16px;
+            background-color: #e5e7e9;
+            border-radius: 50%;
+            position: relative;
+            margin-top: 10px;
+          }
+          .slick-dots li {
+            margin: 0 10px;
+            transition: width 0.3s ease-in-out;
+          }
+        
+          .slick-list{
+            overflow: hidden;
+            margin-bottom: 25px;
+          }
+          .slick-slide:not(.slick-active) .team-slider-col,
+          .slick-slide:not(.slick-active) .team-slider-col {
+            visibility: hidden;
+          }
+
+          .slick-slide:not(.slick-active) {
+            visibility: hidden;
+        }
+      
+        .slick-slide:not(.slick-active) div {
+            visibility: hidden;
+        }
+      
+        .slick-slide:not(.slick-active) div img {
+            visibility: hidden !important;
+        }
+
+          .slick-dots .slick-active {
+            transition: width 0.3s ease-in-out;
+          }
+        
+          .slick-dots .slick-active .ft-slick__dots--custom {
+            background-color: #058A9C;
+          }
+          .team-slider-col{
+            width: 20%;
+            align-items: center;
+            justify-content: start;
+            height: 290px;
+            h4{
+                font-family: 'Poppins-Bold';
+                font-style: normal;
+                font-weight: 800;
+                font-size: 18px;
+                line-height: 27px;
+                text-align: center;
+                color: #0A004A;
+            }
+            p{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: center;
+                color: #0A004A;
+            }
+            .icon-linkedin{
+                color: #7f2fde;
+                font-size: 29px;
+            }
+          }
+    }
+}
+
+.shown{
+    display: flex;
+}
+
+.hiden{
+    display: none;
+}
+
+@media screen and (max-width:1200px) {
+    .team-content{
+        padding: 50px 20px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .team-content{
+        .team-main-slider{
+            .slick-slider{
+                width: 40%;
+            }
+        }
+    }
+    .shown{
+        display: none;
+    }
+    .hiden{
+        display: flex;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .team-content{
+        .team-main-slider{
+            .slick-slider{
+                width: 50%!important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:576px) {
+    .team-content{
+        .team-main-slider{
+            .slick-slider{
+                width: 80%!important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:420px) {
+    .team-content{
+        .team-main-slider{
+            .slick-slider{
+                width: 100%!important;
+            }
+        }
+    }
+}

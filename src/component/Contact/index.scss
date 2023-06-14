@@ -1,0 +1,106 @@
+.contact-content{
+    padding: 50px 150px;
+    h2{
+        font-family: 'Poppins-Bold';
+        font-style: normal;
+        font-weight: 800;
+        font-size: 30px;
+        line-height: 45px;
+        text-align: center;
+        color: #0A004A;
+    }
+    .subtitle{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        text-align: center;
+    }
+    .contact-main-content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        .contact-submit{
+            margin-right: 100px;
+            label{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 30px;
+                color: #626165;
+            }
+            .form-control{
+                padding: 15px;
+            }
+            .buy-button{
+                width: fit-content;
+                padding: 10px 30px!important;
+            }
+        }
+        .follow-us{
+            display: flex;
+            justify-content: center;
+            .follow-content{
+                display: flex;
+                border-radius: 20px;
+                flex-direction: column;
+                background-color: #0D1A8C;
+                .follow-main{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 15px;
+                    padding: 35px 0;
+                    h2{
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .contact-content{
+        padding: 50px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .contact-content{
+        .contact-main-content{
+            .contact-submit{
+                margin: 0;
+                margin-bottom: 80px;
+            }
+            .follow-us{
+                display: block;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:576px) {
+    .contact-content{
+        .contact-main-content{
+            .follow-us{
+                display: flex!important;
+                .follow-content{
+                    .follow-img{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:420px) {
+    .contact-content{
+        padding: 50px 10px;
+    }
+}
