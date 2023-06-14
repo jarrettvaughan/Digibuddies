@@ -1,14 +1,14 @@
 import React from "react";
-import Mint from "../component/Mint";
+import Whitelist from "../component/Whitelist";
 import Faq from "../component/Faq";
 
-const MintPage = () => {
+const WhiteList = () => {
   return (
     <>
-      <Mint />
+      <Whitelist />
       <Faq />
     </>
   );
 };
 
-export default MintPage;
+export default WhiteList;

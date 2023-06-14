@@ -9,7 +9,7 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignUp = () => {
-    navigate("/mint");
+    navigate("/whitelist");
   };
 
   return (

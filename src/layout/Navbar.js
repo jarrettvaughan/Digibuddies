@@ -8,9 +8,9 @@ export default function Header() {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
-  const handleMint = () => {
+  const handleWhitelist = () => {
     setExpanded(false);
-    navigate("/mint");
+    navigate("/whitelist");
   };
 
   return (
@@ -102,7 +102,7 @@ export default function Header() {
             <Button
               className="buy-button"
               variant="success"
-              onClick={() => handleMint()}
+              onClick={() => handleWhitelist()}
             >
               Join Waitlist
             </Button>
