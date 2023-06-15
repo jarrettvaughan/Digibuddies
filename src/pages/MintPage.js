@@ -1,10 +1,9 @@
 import React from "react";
-import Faq from "../component/Faq";
-
+import Mint from "../component/Mint"
 const MintPage = () => {
     return (
         <>
-            <Faq />
+            <Mint />
         </>
     );
 };

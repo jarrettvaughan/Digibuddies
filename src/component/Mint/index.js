@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import * as fcl from "@onflow/fcl";
-import axios from "axios";
+// import * as fcl from "@onflow/fcl";
+// import axios from "axios";
+
+import { Button, Typography } from '@mui/material';
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 
 import "./index.scss";
 import Slider from "react-slick";
-import { Button } from "react-bootstrap";
 import "../../flow/config";
-import { ToastErrMsg, ToastSuccessMsg } from "../Toast";
+// import { ToastErrMsg, ToastSuccessMsg } from "../Toast";
 
 var settings = {
   className: "",
@@ -50,83 +53,28 @@ var settings = {
   ],
 };
 
-const Whitelist = () => {
-  const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-  const [user, setUser] = useState({
-    loggedIn: false,
-    addr: undefined,
-  });
-  const [userEmail, setUserEmail] = useState("");
-
-  useEffect(() => {
-    fcl.currentUser.subscribe((user) => {
-      console.log("user: ", user);
-      const signedEmail = user.services[0]?.scoped?.email;
-      setUserEmail(signedEmail);
-      setUser(user);
-    });
-    // if (user.addr !== "") {
-    // getFlow(user.addr);
-    // }
-  }, [user.addr]);
-
-  const logOut = async () => {
-    await fcl.unauthenticate();
-    setUser({ addr: undefined, loggedIn: false });
-  };
-
-  const logIn = async () => {
-    try {
-      const res_auth = await fcl.authenticate();
-      if (res_auth.loggedIn) {
-        // const userEmail = res_auth.services[0]?.scoped?.email;
-
-        const req_userData = {
-          email: userEmail,
-          address: res_auth.addr,
-        };
-        try {
-          const res_whitelist = await axios.post(
-            SERVER_URL + "signupwhitelist",
-            req_userData
-          );
-          if (res_whitelist.data.success) {
-            ToastSuccessMsg("Success joining whitelist!");
-          } else {
-            ToastErrMsg(res_whitelist.data.msg);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    } catch (error) {
-      console.log("Error: ", error);
+const Mint = () => {
+  const [mintCount, setMintCount] = useState(0);
+  const handlePrev = () => {
+    if (mintCount <= 0) {
+      return;
     }
-  };
 
-  // async function getFlow(address) {
-  //   try {
-  //     const res = await fcl.query({
-  //       cadence: `
-  //                 import FlowToken from 0x7e60df042a9c0868
-  //                 import FungibleToken from 0x9a0766d93b6608b7
+    setMintCount(mintCount - 1);
+  }
 
-  //                 pub fun main(address: Address): UFix64{
-  //                   let balanceVault =  getAccount(address).getCapability(/public/flowTokenBalance).borrow<&FlowToken.Vault{FungibleToken.Balance}>()!
-  //                   return balanceVault.balance
-  //                 }`,
-  //       args: (arg, t) => [arg(address, t.Address)],
-  //     });
-  //     setFlow(res);
-  //   } catch (error) {
-  //     console.log("err:", error);
-  //   }
-  // }
+  const handleNext = () => {
+    setMintCount(mintCount + 1);
+  }
+
+  const handleMint = () => {
+
+  }
 
   return (
     <div className="mint-content">
       <div className="container">
-        <h2>Are you ready to be a part of the Digibuddi craze?</h2>
+        <h2>How Many Digibuddies Would you Like to Purchase?</h2>
         <div className="row">
           <div className="col-lg-6">
             <Slider {...settings}>
@@ -150,55 +98,50 @@ const Whitelist = () => {
           <div className="col-lg-6">
             <div className="mint-desc-content">
               <h4>
-                Join our exclusive 'allow list' today and be the first to know
-                when the Digibuddies go on sale in mid-June!
+                Price: $50.00 USD each
               </h4>
               <p>
-                Trust us, you don't want to miss out on the chance to snag one
-                of our limited 750 one-of-a-kind characters. To gain priority
-                access to purchase your very own Digibuddi, all you need to do
-                is create a Dapper Wallet through the provided link. It's quick,
-                easy, and oh-so-rewarding!
+
               </p>
               <p>
-                Once you've got your Digibuddi in hand, spread the word to all
-                your friends and followers on social media. And the best part?
-                With each purchase, 20% of the price goes towards supporting BC
-                Children's Hospital and kids like Sailor. Now that's what we
-                call a win-win! So, what are you waiting for?
+                Remember, 20% of ever purchase will be donated to BC Children's Hospital
               </p>
               <p>
-                Let's have some fun and make a difference in the lives of
-                children in need.
+                PS..... after you make your purchase, you will be able to see the random Digibuddi that you have have purchase including its traits, superpowers and levels of rarity!
               </p>
               <h4>Join the Digibuddi hype!</h4>
-              {user.loggedIn ? (
-                <div>
-                  <Button
-                    className="buy-button"
-                    variant="success"
-                    onClick={() => {
-                      logOut();
-                    }}
-                  >
-                    Logout
-                  </Button>
+              <div className="row mt-5">
+                <div className="col-3">
+                  <h4>Step1</h4>
                 </div>
-              ) : (
-                <Button
-                  className="buy-button"
-                  variant="success"
-                  onClick={() => logIn()}
-                >
-                  Join Waitlist
-                </Button>
-              )}
+                <div className="col-9">
+                  <div className="d-flex">
+                    <Button onClick={handlePrev}><ArrowBackIosNewOutlinedIcon /></Button>
+                    <Button color="success" variant="contained">{mintCount}</Button>
+                    <Button onClick={handleNext}><ArrowForwardIosOutlinedIcon /></Button>
+                  </div>
+                  <div className="d-flex mt-3 justify-content-between align-items-center">
+                    <Button variant="contained" color="success">${parseFloat(50 * mintCount).toFixed(2)}</Button>
+                    <Typography variant="h4" className="my-auto">TotalCost</Typography>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-5">
+                <div className="col-3">
+                  <h4>Step2</h4>
+                </div>
+                <div className="col-9 d-flex justify-content-center">
+                  <Button onClick={handleMint} variant="contained" color="success">Mint</Button>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
   );
 };
 
-export default Whitelist;
+export default Mint;
