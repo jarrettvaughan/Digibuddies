@@ -9,7 +9,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const handleMint = () => {
-    navigate("/mint");
+    navigate("/whitelist");
   };
 
   return (

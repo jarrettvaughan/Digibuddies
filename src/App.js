@@ -7,10 +7,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "./App.css";
 import Navbar from "./layout/Navbar";
 import Main from "./pages/Main";
-import MintPage from "./pages/Mint";
+import WhiteList from "./pages/WhiteList";
 import Footer from "./component/Footer";
 import Legal from "./component/Legal";
 import Policy from "./component/Policy";
+import MintPage from "./pages/MintPage";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
           <Route
             path=""
             element={<Main />}
+          />
+          <Route
+            path="/whitelist"
+            element={<WhiteList />}
           />
           <Route
             path="/mint"

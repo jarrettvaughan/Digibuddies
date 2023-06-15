@@ -1,0 +1,210 @@
+.mint-content {
+    padding: 70px 20px;
+    background-color: #0D1A8C;
+    h2{
+        font-family: 'Poppins-Bold';
+        font-style: normal;
+        font-weight: 800;
+        font-size: 30px;
+        line-height: 45px;
+        color: #fff;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+    .mint-desc-content{
+        p{
+          font-family: 'Poppins';
+          font-style: normal;
+          font-size: 16px;
+          line-height: 150%;
+          color: #fff;
+          margin-bottom: 20px;
+        }
+        h4{
+            font-family: 'Poppins-Bold';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 120%;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .buy-button{
+            width: fit-content;
+            padding: 10px 30px!important;
+        }
+    }
+    .mint-slide-bar {
+      height: 16px;
+      width: 16px;
+      background-color: #e5e7e9;
+      border-radius: 50%;
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .slick-slider {
+        width: 100%;
+        padding: 0 3%;
+    }
+    
+    .slick-slide {
+        height: auto;
+    }
+    
+    .slick-track {
+        display: flex;
+        // padding-top: 30px;
+        //  max-width:100%;
+    }
+    
+    .slider-item {
+        position: relative;
+        overflow: visible;
+    }
+    
+    .slider-item-bg {
+        width: 100%;
+    }
+    
+    .slider-item-img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 125%;
+        max-width: none;
+    }
+    
+    .slick-slide:not(.slick-active) {
+        visibility: hidden;
+    }
+    
+    .slick-slide:not(.slick-active) div {
+        visibility: hidden;
+    }
+    
+    .slick-slide:not(.slick-active) div img {
+        visibility: hidden !important;
+    }
+  
+    .slick-dots li {
+      transition: width 0.3s ease-in-out;
+    }
+  
+    .slick-dots .slick-active {
+      transition: width 0.3s ease-in-out;
+    }
+  
+    .slick-dots .slick-active .mint-slide-bar {
+      background-color: #058A9C;
+    }
+    
+    .slick-dots li:nth-child(1) button:before{
+      background: url("../../asset/img/Thumb1.png") no-repeat;
+      background-size: contain!important;
+    }
+    .slick-dots li:nth-child(2) button:before{
+        background: url("../../asset/img/Thumb2.png") no-repeat;
+        background-size: contain!important;
+    }
+    .slick-dots li:nth-child(3) button:before{
+        background: url("../../asset/img/Thumb3.png") no-repeat;
+        background-size: contain!important;
+    }
+    .slick-dots li:nth-child(4) button:before{
+        background: url("../../asset/img/Thumb4.png") no-repeat;
+        background-size: contain!important;
+    }
+    .slick-dots li:nth-child(5) button:before{
+      background: url("../../asset/img/Thumb5.png") no-repeat;
+      background-size: contain!important;
+    }
+    .slick-dots li button:before{
+        content: ''!important;
+        height:100%!important;
+        width: 100%!important;
+    }
+    .slick-dots li{
+        width: 100px;
+        height:100px;
+        margin: 0!important;
+        margin-right: 5px !important;
+    }
+    .slick-dots{
+        bottom: initial!important;
+        left: -5px;
+    }
+  }
+
+@media screen and (min-width: 1399px) {
+  .mint-content{
+    padding-bottom: 120px;
+  } 
+}
+
+@media screen and (max-width: 1199px) {
+  .mint-content{
+    .slick-dots{
+      li{
+        width: 80px!important;
+      }
+    }
+  }
+}
+  
+@media screen and (max-width: 992px) {
+  .mint-content{
+    .mint-desc-content{
+      margin-top: 130px;
+    }
+    .slick-dots{
+      left: -5px;
+    }
+    .slick-dots{
+      li{
+        width: 100px!important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mint-content{
+    .slick-dots{
+      li{
+        width: 85px!important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .mint-content{
+    .slick-dots{
+      li{
+        width: 70px!important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .mint-content{
+    .slick-dots{
+      li{
+        width: 50px!important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 339px) {
+  .mint-content{
+    .slick-dots{
+      li{
+        width: 40px!important;
+      }
+    }
+  }
+}
