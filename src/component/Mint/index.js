@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import * as fcl from "@onflow/fcl";
+import * as fcl from "@onflow/fcl";
 // import axios from "axios";
 
 import { Button, Typography } from '@mui/material';
@@ -10,6 +10,8 @@ import "./index.scss";
 import Slider from "react-slick";
 import "../../flow/config";
 // import { ToastErrMsg, ToastSuccessMsg } from "../Toast";
+import mintCadence from "./mint.cdc"
+import initCadence from "./init.cdc"
 
 var settings = {
   className: "",
@@ -67,8 +69,71 @@ const Mint = () => {
     setMintCount(mintCount + 1);
   }
 
-  const handleMint = () => {
+  const handleMint = async () => {
+    console.log("mintCount---", mintCount);
+    try {
+      const res1 = await fcl.mutate({
+        cadence: `import NonFungibleToken from 0x631e88ae7f1d7c20
+        import MetadataViews from 0x631e88ae7f1d7c20
+        import DigiBuddies from 0x807c1898085b54aa
+        
+        transaction(){
+          prepare(signer: AuthAccount){
+            let DigiBuddiesCap = signer.getCapability<&{NonFungibleToken.CollectionPublic, DigiBuddies.CollectionPublic}>(DigiBuddies.CollectionPublicPath)
+        
+            if !DigiBuddiesCap.check(){
+                signer.save(<- DigiBuddies.createEmptyCollection(), to: DigiBuddies.CollectionStoragePath)
+                signer.link<&DigiBuddies.Collection{DigiBuddies.CollectionPublic, NonFungibleToken.CollectionPublic, NonFungibleToken.Receiver, MetadataViews.ResolverCollection}>(DigiBuddies.CollectionPublicPath, target: DigiBuddies.CollectionStoragePath)
+            } else{
+                panic("Account already has a DigiBuddies Collection")
+            }
+          }
+        }`,
+        limit: 9999,
+      });
+      const res = await fcl.mutate({
+        cadence: `import DigiBuddies from 0x807c1898085b54aa
+        import NonFungibleToken from 0x631e88ae7f1d7c20
+        import MetadataViews from 0x631e88ae7f1d7c20
+        import FungibleToken from 0x9a0766d93b6608b7
+        
+        transaction(count: UInt64){
+            let recipientCollection: &DigiBuddies.Collection{NonFungibleToken.CollectionPublic}
+            let transferVault: @FungibleToken.Vault
+        
+            prepare(signer: AuthAccount){
+                
+            if signer.borrow<&DigiBuddies.Collection>(from: DigiBuddies.CollectionStoragePath) == nil {
+            signer.save(<- DigiBuddies.createEmptyCollection(), to: DigiBuddies.CollectionStoragePath)
+            signer.link<&DigiBuddies.Collection{NonFungibleToken.CollectionPublic, MetadataViews.ResolverCollection}>(DigiBuddies.CollectionPublicPath, target: DigiBuddies.CollectionStoragePath)
+            }
+        
+            self.recipientCollection = signer.getCapability(DigiBuddies.CollectionPublicPath)
+                                        .borrow<&DigiBuddies.Collection{NonFungibleToken.CollectionPublic}>()!
+            let vaultRef = signer.borrow<&FungibleToken.Vault>(from: /storage/flowTokenVault)
+            ?? panic("Could not borrow reference to the owner's Vault!")
+            self.transferVault <- vaultRef.withdraw(amount: 50.0)
+            
+            }
+            execute{
+                DigiBuddies.batchMintNFT(recipient: self.recipientCollection, count: count, vault: <- self.transferVault)
+            }
+        }`,
+        args: (arg, t) => [arg(mintCount, t.UInt64)],
+        limit: 9999,
+      });
+      fcl.tx(res).subscribe((res) => {
+        if (res.status === 4 && res.errorMessage === "") {
+            window.alert("NFT Minted!")
+            window.location.reload(false);
+        }
+      });
 
+      console.log("txid", res);
+      console.log("error:---", res.errorMessage);
+    } catch (error) {
+      console.log("err", error);
+    }
   }
 
   return (

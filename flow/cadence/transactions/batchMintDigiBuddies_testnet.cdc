@@ -1,5 +1,5 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
-import DigiBuddies from 0xbe50d04ad87007f1
+import DigiBuddies from 0x807c1898085b54aa
 
 transaction (data: [AnyStruct]){
     let adminCap: &DigiBuddies.Admin
@@ -18,14 +18,14 @@ transaction (data: [AnyStruct]){
 
     while index < nfts {
 
-      let name = data[index + 1]! as! String
-      let description = data[index + 2]! as! String
-      let image = data[index + 3]! as! String
-      let traits = data[index + 4]! as! {String: String}
+      let name = data[index]! as! String
+      let description = data[index + 1]! as! String
+      let image = data[index + 2]! as! String
+      let traits = data[index + 3]! as! {String: String}
 
       self.adminCap.mintNFT(recipient: self.recipient, name: name, description: description, image: image, traits: traits)
       
-      index = index + 5
+      index = index + 4
     }
   }
 }

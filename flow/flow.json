@@ -1,12 +1,6 @@
 {
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "DigiBuddiesStorefront"
-		}
-	},
 	"contracts": {
-		"DigiBuddiesStorefront": "./cadence/contracts/DigiBuddiesStorefront_testnet.cdc"
+		"DigiBuddies": "./cadence/contracts/DigiBuddies_testnet.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -14,20 +8,16 @@
 		"testnet": "access.devnet.nodes.onflow.org:9000"
 	},
 	"accounts": {
-		"DigiBuddiesStorefront": {
-			"address": "4fc073078af36c9e",
-			"key": {
-				"type": "hex",
-				"index": 0,
-				"signatureAlgorithm": "ECDSA_P256",
-				"hashAlgorithm": "SHA3_256",
-				"privateKey": "ae9f6cc2e51bfe6a212e47c58a08be223ad45412b7386c75caf6ea5fa6ab2885"
-			}
+		"DigiBuddies_testnet": {
+			"address": "0x807c1898085b54aa",
+			"key": "c24d5f8b400e85bc14cec04774ab36064300e0741d46a0072ed9f4d7888b12de"
 		}
 	},
 	"deployments": {
 		"testnet": {
-			"DigiBuddiesStorefront": ["DigiBuddiesStorefront"]
+			"DigiBuddies_testnet": [
+				"DigiBuddies"
+			]
 		}
 	}
 }
