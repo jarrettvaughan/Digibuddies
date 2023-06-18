@@ -1,5 +1,6 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
 import MetadataViews from 0x631e88ae7f1d7c20
+import FungibleToken from 0x9a0766d93b6608b7
 
 pub contract DigiBuddies: NonFungibleToken {
 
@@ -14,6 +15,7 @@ pub contract DigiBuddies: NonFungibleToken {
     pub let AdminStoragePath: StoragePath
 
     pub var totalSupply: UInt64
+    pub var currentIndex: UInt64
 
     pub struct DigiBuddiesMetadata {
         pub let id: UInt64
@@ -235,7 +237,7 @@ pub contract DigiBuddies: NonFungibleToken {
             DigiBuddies.totalSupply = DigiBuddies.totalSupply + (1 as UInt64)
             
 			recipient.deposit(token: <- create DigiBuddies.NFT(
-			    initID: DigiBuddies.totalSupply,
+			    id: DigiBuddies.totalSupply,
                 name: name,
                 description: description,
 			    image:image,
@@ -246,6 +248,30 @@ pub contract DigiBuddies: NonFungibleToken {
 
 	}
 
+
+    pub fun batchMintNFT(
+            recipient: &{NonFungibleToken.CollectionPublic},
+            count: UInt64,
+            vault: @FungibleToken.Vault
+        ) {
+            pre {
+                vault.balance >= 50.0 * UFix64(count):"Insufficient Value!"
+            }
+            // withdraw nft from Admin
+            var index = UInt64(0)
+            while index < count {
+                index = index + UInt64(1)
+                let sender = self.account.borrow<&Collection>(from: /storage/DigiBuddiesCollection) ?? panic("Cannot borrow Digibuddies collection!")
+                let nft <- sender.withdraw(withdrawID: self.currentIndex + index)
+                recipient.deposit(token: <- nft)
+            }
+            // deposit it in the recipient's account using their reference
+            let receiverAccount = self.account
+            let receiver = receiverAccount.getCapability(/public/flowTokenReceiver).borrow<&{FungibleToken.Receiver}>() ?? panic("Could not borrow Receiver reference to the Vault")
+            receiver.deposit(from: <- vault)
+            self.currentIndex = self.currentIndex + count
+        }
+
     init() {
         self.CollectionStoragePath = /storage/DigiBuddiesCollection
         self.CollectionPublicPath = /public/DigiBuddiesCollection
@@ -253,6 +279,7 @@ pub contract DigiBuddies: NonFungibleToken {
         self.AdminStoragePath = /storage/DigiBuddiesMinter
 
         self.totalSupply = 0
+        self.currentIndex = 0
 
         let minter <- create Admin()
         self.account.save(<-minter, to: self.AdminStoragePath)
