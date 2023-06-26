@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import * as fcl from "@onflow/fcl";
 // import axios from "axios";
 
-import { Button, Typography } from '@mui/material';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import { Button, Typography } from "@mui/material";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 
 import "./index.scss";
 import Slider from "react-slick";
 import "../../flow/config";
 // import { ToastErrMsg, ToastSuccessMsg } from "../Toast";
-import mintCadence from "./mint.cdc"
-import initCadence from "./init.cdc"
+import mintCadence from "./mint.cdc";
+import initCadence from "./init.cdc";
 
 var settings = {
   className: "",
@@ -63,11 +63,11 @@ const Mint = () => {
     }
 
     setMintCount(mintCount - 1);
-  }
+  };
 
   const handleNext = () => {
     setMintCount(mintCount + 1);
-  }
+  };
 
   const handleMint = async () => {
     console.log("mintCount---", mintCount);
@@ -120,8 +120,8 @@ const Mint = () => {
       });
       fcl.tx(res).subscribe((res) => {
         if (res.status === 4 && res.errorMessage === "") {
-            window.alert("NFT Minted!")
-            window.location.reload(false);
+          window.alert("NFT Minted!");
+          window.location.reload(false);
         }
       });
 
@@ -130,7 +130,7 @@ const Mint = () => {
     } catch (error) {
       console.log("err", error);
     }
-  }
+  };
 
   return (
     <div className="mint-content">
@@ -158,33 +158,50 @@ const Mint = () => {
           </div>
           <div className="col-lg-6">
             <div className="mint-desc-content">
-              <h4>
-                Price: $50.00 USD each
-              </h4>
+              <h4>Price: $50.00 USD each</h4>
+              <p></p>
               <p>
-
+                Remember, 20% of ever purchase will be donated to BC Children's
+                Hospital
               </p>
               <p>
-                Remember, 20% of ever purchase will be donated to BC Children's Hospital
-              </p>
-              <p>
-                PS..... after you make your purchase, you will be able to see the random Digibuddi that you have have purchase including its traits, superpowers and levels of rarity!
+                PS..... after you make your purchase, you will be able to see
+                the random Digibuddi that you have have purchase including its
+                traits, superpowers and levels of rarity!
               </p>
               <h4>Join the Digibuddi hype!</h4>
               <div className="row mt-5">
                 <div className="col-3">
                   <h4>Step1</h4>
                 </div>
-                <div className="col-9">
-                  <div className="d-flex">
-                    <Button onClick={handlePrev}><ArrowBackIosNewOutlinedIcon /></Button>
-                    <Button color="success" variant="contained">{mintCount}</Button>
-                    <Button onClick={handleNext}><ArrowForwardIosOutlinedIcon /></Button>
+                <div className="col-6 text-center">
+                  <div>
+                    <Button onClick={handlePrev}>
+                      <ArrowBackIosNewOutlinedIcon />
+                    </Button>
+                    <Button color="success" variant="contained">
+                      {mintCount}
+                    </Button>
+                    <Button onClick={handleNext}>
+                      <ArrowForwardIosOutlinedIcon />
+                    </Button>
                   </div>
-                  <div className="d-flex mt-3 justify-content-between align-items-center">
-                    <Button variant="contained" color="success">${parseFloat(50 * mintCount).toFixed(2)}</Button>
-                    <Typography variant="h4" className="my-auto">TotalCost</Typography>
+                </div>
+                <div className="col-3"></div>
+              </div>
+              <div className="row d-flex align-items-center mt-3">
+                <div className="col-3"></div>
+                <div className="col-6 text-center">
+                  <div className="">
+                    <Button variant="contained" color="success">
+                      ${parseFloat(50 * mintCount).toFixed(2)}
+                    </Button>
                   </div>
+                </div>
+                <div className="col-3">
+                  <Typography variant="h4" className="my-auto">
+                    TotalCost
+                  </Typography>
                 </div>
               </div>
 
@@ -192,13 +209,19 @@ const Mint = () => {
                 <div className="col-3">
                   <h4>Step2</h4>
                 </div>
-                <div className="col-9 d-flex justify-content-center">
-                  <Button onClick={handleMint} variant="contained" color="success">Mint</Button>
+                <div className="col-6 d-flex justify-content-center">
+                  <Button
+                    onClick={handleMint}
+                    variant="contained"
+                    color="success"
+                  >
+                    Mint
+                  </Button>
                 </div>
+                <div className="col-3"></div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
