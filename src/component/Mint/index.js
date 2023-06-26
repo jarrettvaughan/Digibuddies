@@ -101,7 +101,7 @@ const Mint = () => {
               self.transferValut <- vaultRef.withdraw(amount: UFix64(count) * 50.0)
             }
             else {
-              let futVaultRef = dapper.borrow<&FungibleToken.Vault>(from: /storage/flowUtilityTokenVault)
+              let futVaultRef = signer.borrow<&FungibleToken.Vault>(from: /storage/flowUtilityTokenVault)
               ?? panic("Could not borrow reference to the owner's Vault!")
               self.transferValut <- futVaultRef.withdraw(amount: UFix64(count) * 50.0)
             }            
