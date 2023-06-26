@@ -1,5 +1,4 @@
 import * as fcl from "@onflow/fcl";
-import { init } from "@onflow/fcl-wc"
 
 fcl.config({
   "app.detail.title": process.env.REACT_APP_DETAIL_TITLE || "Digibuddies", // this adds a custom name to our wallet
