@@ -1,6 +1,7 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
 import MetadataViews from 0x631e88ae7f1d7c20
 import FungibleToken from 0x9a0766d93b6608b7
+import FlowUtilityToken from 0x82ec283f88a62e65
 
 pub contract DigiBuddies: NonFungibleToken {
 
@@ -249,7 +250,7 @@ pub contract DigiBuddies: NonFungibleToken {
 	}
 
 
-    pub fun batchMintNFT(
+    pub fun mintWithFlow(
             recipient: &{NonFungibleToken.CollectionPublic},
             count: UInt64,
             vault: @FungibleToken.Vault
@@ -261,7 +262,7 @@ pub contract DigiBuddies: NonFungibleToken {
             var index = UInt64(0)
             while index < count {
                 index = index + UInt64(1)
-                let sender = self.account.borrow<&Collection>(from: /storage/DigiBuddiesCollection) ?? panic("Cannot borrow Digibuddies collection!")
+                let sender = self.account.borrow<&Collection>(from: /storage/DigiBuddiesCollection_test1) ?? panic("Cannot borrow Digibuddies collection!")
                 let nft <- sender.withdraw(withdrawID: self.currentIndex + index)
                 recipient.deposit(token: <- nft)
             }
@@ -272,11 +273,36 @@ pub contract DigiBuddies: NonFungibleToken {
             self.currentIndex = self.currentIndex + count
         }
 
+    pub fun mintWithFut(
+            recipient: &{NonFungibleToken.CollectionPublic},
+            count: UInt64,
+            vault: @FungibleToken.Vault
+    )   {
+            pre {
+                vault.balance >= 50.0 * UFix64(count):"Insufficient Value!"
+            }
+            // withdraw nft from Admin
+            var index = UInt64(0)
+            while index < count {
+                index = index + UInt64(1)
+                let sender = self.account.borrow<&Collection>(from: /storage/DigiBuddiesCollection_test1) ?? panic("Cannot borrow Digibuddies collection!")
+                let nft <- sender.withdraw(withdrawID: self.currentIndex + index)
+                recipient.deposit(token: <- nft)
+            }
+            // deposit it in the recipient's account using their reference
+            let receiverAccount = self.account
+            let receiver = receiverAccount.getCapability(/public/flowUtilityTokenReceiver).borrow<&{FungibleToken.Receiver}>() ?? panic("Could not borrow Receiver reference to the Vault")
+            let futVault <- vault as! @FlowUtilityToken.Vault
+            receiver.deposit(from: <- futVault)
+            self.currentIndex = self.currentIndex + count
+        }
+    
+
     init() {
-        self.CollectionStoragePath = /storage/DigiBuddiesCollection
-        self.CollectionPublicPath = /public/DigiBuddiesCollection
-        self.CollectionPrivatePath = /private/DigiBuddiesCollection
-        self.AdminStoragePath = /storage/DigiBuddiesMinter
+        self.CollectionStoragePath = /storage/DigiBuddiesCollection_test1
+        self.CollectionPublicPath = /public/DigiBuddiesCollection_test1
+        self.CollectionPrivatePath = /private/DigiBuddiesCollection_test1
+        self.AdminStoragePath = /storage/DigiBuddiesMinter_test1
 
         self.totalSupply = 0
         self.currentIndex = 0
@@ -286,7 +312,7 @@ pub contract DigiBuddies: NonFungibleToken {
 
         let collection <- DigiBuddies.createEmptyCollection()
         self.account.save(<-collection, to: DigiBuddies.CollectionStoragePath)
-        self.account.link<&DigiBuddies.Collection{NonFungibleToken.CollectionPublic, DigiBuddies.CollectionPublic}>(DigiBuddies.CollectionPublicPath, target: DigiBuddies.CollectionStoragePath)
+        self.account.link<&DigiBuddies.Collection{NonFungibleToken.CollectionPublic, DigiBuddies.CollectionPublic, MetadataViews.ResolverCollection}>(DigiBuddies.CollectionPublicPath, target: DigiBuddies.CollectionStoragePath)
 
         emit ContractInitialized()
     }

@@ -8,14 +8,14 @@
 		"testnet": "access.devnet.nodes.onflow.org:9000"
 	},
 	"accounts": {
-		"DigiBuddies_testnet": {
-			"address": "0x807c1898085b54aa",
-			"key": "c24d5f8b400e85bc14cec04774ab36064300e0741d46a0072ed9f4d7888b12de"
+		"DigiBuddies_testmint": {
+			"address": "08f72a6ac4045df8",
+			"key": "cb3c2e35d3ec15eef19de8ec4f771662363680ea4c11bba74015bca4acf0e103"
 		}
 	},
 	"deployments": {
 		"testnet": {
-			"DigiBuddies_testnet": [
+			"DigiBuddies_testmint": [
 				"DigiBuddies"
 			]
 		}

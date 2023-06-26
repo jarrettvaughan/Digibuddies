@@ -72,35 +72,18 @@ const Mint = () => {
   const handleMint = async () => {
     console.log("mintCount---", mintCount);
     try {
-      const res1 = await fcl.mutate({
-        cadence: `import NonFungibleToken from 0x631e88ae7f1d7c20
-        import MetadataViews from 0x631e88ae7f1d7c20
-        import DigiBuddies from 0x807c1898085b54aa
-        
-        transaction(){
-          prepare(signer: AuthAccount){
-            let DigiBuddiesCap = signer.getCapability<&{NonFungibleToken.CollectionPublic, DigiBuddies.CollectionPublic}>(DigiBuddies.CollectionPublicPath)
-        
-            if !DigiBuddiesCap.check(){
-                signer.save(<- DigiBuddies.createEmptyCollection(), to: DigiBuddies.CollectionStoragePath)
-                signer.link<&DigiBuddies.Collection{DigiBuddies.CollectionPublic, NonFungibleToken.CollectionPublic, NonFungibleToken.Receiver, MetadataViews.ResolverCollection}>(DigiBuddies.CollectionPublicPath, target: DigiBuddies.CollectionStoragePath)
-            } else{
-                panic("Account already has a DigiBuddies Collection")
-            }
-          }
-        }`,
-        limit: 9999,
-      });
       const res = await fcl.mutate({
-        cadence: `import DigiBuddies from 0x807c1898085b54aa
+        cadence: `import DigiBuddies from 0x08f72a6ac4045df8
         import NonFungibleToken from 0x631e88ae7f1d7c20
         import MetadataViews from 0x631e88ae7f1d7c20
         import FungibleToken from 0x9a0766d93b6608b7
+        import FlowUtilityToken from 0x82ec283f88a62e65
         
         transaction(count: UInt64){
             let recipientCollection: &DigiBuddies.Collection{NonFungibleToken.CollectionPublic}
-            let transferVault: @FungibleToken.Vault
-        
+            let transferValut: @FungibleToken.Vault
+            let flowBalance: UFix64
+
             prepare(signer: AuthAccount){
                 
             if signer.borrow<&DigiBuddies.Collection>(from: DigiBuddies.CollectionStoragePath) == nil {
@@ -112,11 +95,24 @@ const Mint = () => {
                                         .borrow<&DigiBuddies.Collection{NonFungibleToken.CollectionPublic}>()!
             let vaultRef = signer.borrow<&FungibleToken.Vault>(from: /storage/flowTokenVault)
             ?? panic("Could not borrow reference to the owner's Vault!")
-            self.transferVault <- vaultRef.withdraw(amount: 50.0)
+            
+            self.flowBalance = vaultRef.balance
+            if self.flowBalance >= UFix64(count) * 50.0 {
+              self.transferValut <- vaultRef.withdraw(amount: UFix64(count) * 50.0)
+            }
+            else {
+              let futVaultRef = dapper.borrow<&FungibleToken.Vault>(from: /storage/flowUtilityTokenVault)
+              ?? panic("Could not borrow reference to the owner's Vault!")
+              self.transferValut <- futVaultRef.withdraw(amount: UFix64(count) * 50.0)
+            }            
             
             }
             execute{
-                DigiBuddies.batchMintNFT(recipient: self.recipientCollection, count: count, vault: <- self.transferVault)
+              if self.flowBalance >= UFix64(count) * 50.0 {
+                DigiBuddies.mintWithFlow(recipient: self.recipientCollection, count: count, vault: <- self.transferValut)
+              } else {
+                DigiBuddies.mintWithFut(recipient: self.recipientCollection, count: count, vault: <- self.transferValut)
+              }
             }
         }`,
         args: (arg, t) => [arg(mintCount, t.UInt64)],

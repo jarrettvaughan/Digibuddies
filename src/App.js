@@ -12,6 +12,7 @@ import Footer from "./component/Footer";
 import Legal from "./component/Legal";
 import Policy from "./component/Policy";
 import MintPage from "./pages/MintPage";
+import ShowNFTs from "./pages/ShowNFTs";
 
 function App() {
   return (
@@ -41,6 +42,10 @@ function App() {
           <Route
             path="/mint"
             element={<MintPage />}
+          />
+          <Route
+            path="/showNfts"
+            element={<ShowNFTs />}
           />
           <Route
             path="/legal"

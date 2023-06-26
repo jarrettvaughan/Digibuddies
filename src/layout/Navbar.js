@@ -1,16 +1,40 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Button, Nav } from "react-bootstrap";
 import { FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import * as fcl from "@onflow/fcl";
 
 export default function Header() {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
+  const [user, setUser] = useState({
+    loggedIn: false,
+    addr: undefined,
+  });
 
   const handleWhitelist = () => {
     setExpanded(false);
     navigate("/whitelist");
+  };
+
+  
+  useEffect(() => {
+    fcl.currentUser.subscribe((user) => {
+      setUser(user);
+    });
+    // if (user.addr !== "") {
+    // getFlow(user.addr);
+    // }
+  }, [user.addr]);
+
+  const logOut = async () => {
+    await fcl.unauthenticate();
+    setUser({ addr: undefined, loggedIn: false });
+  };
+
+  const logIn = async () => {
+      const res_auth = await fcl.authenticate();
   };
 
   return (
@@ -62,6 +86,15 @@ export default function Header() {
             </HashLink>
             <HashLink
               className="font-color m-2 text-decoration-none"
+              to="/mint"
+              onClick={() => {setExpanded(false);
+                // navigate("/mint");
+              }}
+            >
+              Mint
+            </HashLink>
+            <HashLink
+              className="font-color m-2 text-decoration-none"
               to="/#faq"
               onClick={() => setExpanded(false)}
             >
@@ -99,13 +132,37 @@ export default function Header() {
                 alt=""
               />
             </HashLink>
-            <Button
-              className="buy-button"
-              variant="success"
-              onClick={() => handleWhitelist()}
-            >
-              Join Waitlist
-            </Button>
+            {user.loggedIn ? (
+                <div style={{"display": "flex"}}>
+                  <Button
+                    className="buy-button"
+                    variant="success"
+                    onClick={() => {
+                      logOut();
+                    }}
+                  >
+                    Disconnect
+                  </Button>
+                  <Button
+                    className="buy-button"
+                    variant="success"
+                    style={{"margin-left": "5px"}}
+                    onClick={() => {
+                      navigate("/showNfts")
+                    }}
+                  >
+                    ShowNFTs
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  className="buy-button"
+                  variant="success"
+                  onClick={() => logIn()}
+                >
+                  Connect Wallet
+                </Button>
+              )}
           </div>
         </Nav>
       </Navbar.Collapse>

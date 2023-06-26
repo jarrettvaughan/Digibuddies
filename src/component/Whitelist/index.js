@@ -57,6 +57,7 @@ const Whitelist = () => {
     addr: undefined,
   });
   const [userEmail, setUserEmail] = useState("");
+  const [registered, setRegistered] =useState(false);
 
   useEffect(() => {
     fcl.currentUser.subscribe((user) => {
@@ -69,12 +70,40 @@ const Whitelist = () => {
     // getFlow(user.addr);
     // }
   }, [user.addr]);
+  useEffect(() => {
+    fcl.currentUser.subscribe((user) => {
+      console.log("user: ", user);
+      const signedEmail = user.services[0]?.scoped?.email;
+      setUserEmail(signedEmail);
+      setUser(user);
+    });
+  }, []);
 
-  const logOut = async () => {
-    await fcl.unauthenticate();
-    setUser({ addr: undefined, loggedIn: false });
-  };
-
+  const checkWhiteList = async () =>{
+    try {
+      if (user.addr) {
+        const req_userData = {
+          address: user.addr,
+        };
+        try {
+          const res_whitelist = await axios.post(
+            SERVER_URL + "/api/checkUser",
+            req_userData
+          );
+          if (res_whitelist.data.success) {
+            ToastSuccessMsg("Success joining whitelist!");
+            setRegistered(true);
+          } else {
+            ToastErrMsg(res_whitelist.data.msg);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }
   const logIn = async () => {
     try {
       const res_auth = await fcl.authenticate();
@@ -172,16 +201,14 @@ const Whitelist = () => {
                 children in need.
               </p>
               <h4>Join the Digibuddi hype!</h4>
-              {user.loggedIn ? (
+              {registered ? (
                 <div>
                   <Button
                     className="buy-button"
                     variant="success"
-                    onClick={() => {
-                      logOut();
-                    }}
+
                   >
-                    Logout
+                    Whitelisted
                   </Button>
                 </div>
               ) : (
